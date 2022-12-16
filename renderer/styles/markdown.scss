@@ -1,0 +1,326 @@
+@import "codemirror-ssr/lib/codemirror.css";
+@import "tippy.js/dist/tippy.css";
+@import "tippy.js/themes/light-border.css";
+
+$border-color: #262626;
+$primary: #0f62fe;
+$sidebar-width: 280px;
+$max-width: 800px;
+$background-color: #000000;
+
+.bytemd {
+  // reset
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  &-hidden {
+    display: none !important;
+  }
+
+  /* Force content-box sizing for the elements where we expect it */
+  .CodeMirror-scroll,
+  .CodeMirror-sizer,
+  .CodeMirror-gutter,
+  .CodeMirror-gutters,
+  .CodeMirror-linenumber {
+    box-sizing: content-box;
+  }
+
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  color: white;
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  height: 77vh;
+
+  .CodeMirror,
+  code,
+  kbd {
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  }
+
+  &-toolbar {
+    padding: 4px 12px;
+    border-bottom: 1px solid $border-color;
+    background-color: $background-color;
+    user-select: none;
+    overflow: hidden;
+
+    &-left {
+      float: left;
+    }
+
+    &-right {
+      float: right;
+    }
+
+    &-tab {
+      display: inline-block;
+      cursor: pointer;
+      padding-left: 8px;
+      padding-right: 8px;
+      line-height: 24px;
+      font-size: 14px;
+      &-active {
+        color: $primary;
+      }
+    }
+
+    &-icon {
+      display: inline-block;
+      vertical-align: top;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-left: 6px;
+      margin-right: 6px;
+      svg,
+      img {
+        display: block;
+        padding: 4px;
+        width: 24px;
+        height: 24px;
+      }
+      &:hover {
+        background-color: $border-color;
+      }
+      &-active {
+        color: blue;
+      }
+    }
+
+    .tippy-content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  &-dropdown {
+    background: #262626;
+    color: white;
+    max-height: 300px;
+    overflow: auto;
+    font-size: 14px;
+    &-title {
+      margin: 0 12px;
+      font-weight: 500;
+      border-bottom: 1px solid $border-color;
+      line-height: 32px;
+      color: white;
+      font-weight: bold;
+    }
+    &-item {
+      padding: 4px 12px;
+      height: 32px;
+      cursor: pointer;
+      &:hover {
+        background-color: #161616;
+      }
+
+      &-icon {
+        display: inline-block;
+        svg {
+          display: block;
+          padding: 4px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+      &-title {
+        display: inline-block;
+        line-height: 24px;
+        vertical-align: top;
+      }
+    }
+  }
+
+  &-body {
+    height: calc(100% - 33px - 25px);
+    overflow: auto;
+  }
+
+  &-editor {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    overflow: hidden;
+    caret-color: white !important;
+    .CodeMirror {
+      background: #161616;
+      color: white;
+      height: 100%;
+      font-size: 14px;
+      line-height: 1.5;
+      caret-color: white !important;
+      pre.CodeMirror-placeholder {
+        color: white;
+      }
+      .CodeMirror-lines {
+        max-width: $max-width;
+        margin: 0 auto;
+        padding: 16px 0;
+        caret-color: white !important;
+      }
+      pre.CodeMirror-line,
+      pre.CodeMirror-line-like {
+        padding: 0 2%;
+      }
+      .CodeMirror-linenumber {
+        background: #161616;
+        color: #464646;
+      }
+      .CodeMirror-gutter {
+        background: #161616;
+      }
+    }
+  }
+
+  &-preview {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    overflow: auto;
+    .markdown-body {
+      max-width: $max-width;
+      margin: 0 auto;
+      padding: 16px 4%;
+    }
+  }
+
+  &-sidebar {
+    display: inline-block;
+    vertical-align: top; // Safari
+    height: 100%;
+    overflow: auto;
+    font-size: 16px;
+    border-left: 1px solid $border-color;
+    width: $sidebar-width;
+    position: relative;
+    padding: 0 16px;
+    &-close {
+      position: absolute;
+      padding: 16px;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      &:hover {
+        color: $primary;
+      }
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+    }
+    ul {
+      padding-left: 0;
+      color: #262626;
+    }
+  }
+
+  &-help {
+    font-size: 13px;
+    ul {
+      line-height: 20px;
+      svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+      }
+      div {
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+    li {
+      list-style: none;
+      margin-bottom: 12px;
+    }
+    &-icon {
+      padding: 2px 0;
+    }
+    &-title {
+      padding-left: 8px;
+    }
+    &-content {
+      float: right;
+      font-size: 12px;
+    }
+  }
+
+  &-toc {
+    li {
+      list-style: none;
+      margin-bottom: 4px;
+      font-size: 14px;
+      line-height: 2;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    &-active {
+      color: white;
+      background-color: #262626;
+    }
+    &-first {
+      font-weight: 500;
+    }
+  }
+
+  &-status {
+    font-size: 12px;
+    line-height: 24px;
+    border-top: 1px solid $border-color;
+    user-select: none;
+    &-left {
+      float: left;
+      span {
+        padding-left: 16px;
+      }
+      strong {
+        font-weight: 600;
+      }
+    }
+    &-right {
+      float: right;
+      label,
+      span {
+        margin-right: 16px;
+        cursor: pointer;
+      }
+      span:hover {
+        color: $primary;
+      }
+      input {
+        vertical-align: middle;
+        margin-right: 3px; // CSS reset
+      }
+    }
+    &-error {
+      color: red;
+    }
+  }
+
+  &-fullscreen {
+    &.bytemd {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border: none;
+      height: 100vh !important; // override user set height
+    }
+  }
+
+  &-split {
+    .bytemd-preview {
+      border-left: 1px solid $border-color;
+    }
+  }
+}
+
+.tippy-box {
+  font-size: 12px;
+}

@@ -1,0 +1,12 @@
+appId: com.doom.mark
+productName: Mark
+copyright: Copyright © 2022 Camilo Davila
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

@@ -1,16 +1,7 @@
 import * as Popover from "@radix-ui/react-popover";
 import { RxInfoCircled, RxCross2 } from "react-icons/rx";
 
-export default ({
-  name,
-  description,
-  date,
-  user,
-  callback,
-  saveFile,
-  mode,
-  setMode,
-}) => {
+export default ({ name, description, date, user, callback }) => {
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -46,21 +37,6 @@ export default ({
                 onClick={callback}
               >
                 Change Mode
-              </button>
-              <button
-                className="text-white px-2 py-1 bg-sky-700 rounded-md hover:bg-sky-800"
-                onClick={() => {
-                  if (mode == "split") setMode("tab");
-                  else setMode("split");
-                }}
-              >
-                Change editor mode
-              </button>
-              <button
-                className="text-white px-2 py-1 bg-green-700 rounded-md hover:bg-green-800"
-                onClick={saveFile}
-              >
-                Save File
               </button>
               <button className="text-white px-2 py-1 bg-red-700 rounded-md hover:bg-red-800">
                 Delete Note

@@ -4,39 +4,28 @@ import { Layout } from "../../components/layout";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import InfoNotes from "../../components/InfoNotes";
-// bytemd
-import { Editor, Viewer } from "@bytemd/react";
-import gfm from "@bytemd/plugin-gfm";
-import frontmatter from "@bytemd/plugin-frontmatter";
-import gemoji from "@bytemd/plugin-gemoji";
-import highlight from "@bytemd/plugin-highlight";
-import math from "@bytemd/plugin-math";
-import mermaid from "@bytemd/plugin-mermaid";
+// doom-md
 import "katex/dist/katex.min.css";
-
-const plugins = [
-  math(),
-  gfm(),
-  frontmatter(),
-  gemoji(),
-  highlight(),
-  mermaid(),
-];
+import { Editor, Preview } from "../../components/editor";
+import { VscSave } from "react-icons/vsc";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 export default () => {
   const router = useRouter();
   const { id } = router.query;
   const allNotes = useSelector((state) => state.notes.notes);
   const [note] = useState(allNotes.find((n) => n.id == id));
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState("x");
+  const [loaded, setLoaded] = useState(false);
   const [edit, setEdit] = useState(false);
   const [mode, setMode] = useState("split");
 
   useEffect(() => {
-    (async () => {
-      const content = ipcRenderer.sendSync("get-content", note.path);
-      setMarkdown(content);
-    })();
+    const content = ipcRenderer.sendSync("get-content", note.path);
+    setMarkdown(content);
+    setLoaded(true);
   }, []);
 
   const handleSave = (e) => {
@@ -62,30 +51,33 @@ export default () => {
             />
           </div>
           <div className="container mx-auto markdown-body">
-            {edit ? (
+            {loaded && edit ? (
               <Editor
-                mode={mode}
                 value={markdown}
-                plugins={plugins}
-                editorConfig={{
-                  lineNumbers: true,
-                  autofocus: true,
-                }}
                 onChange={(v) => {
                   setMarkdown(v);
                 }}
-                uploadImages={async (files) => {
-                  return [
-                    {
-                      url: `file://${files[0].path}`,
-                      alt: `file://${files[0].path}`,
-                      title: `file://${files[0].path}`,
-                    },
-                  ];
+                plugins={{
+                  remarkPlugins: [remarkGfm, remarkMath],
+                  rehypePlugins: [rehypeKatex],
                 }}
+                buttons={[
+                  {
+                    name: "save file",
+                    onclick: handleSave,
+                    icon: <VscSave />,
+                  },
+                ]}
+                gramKey={"client_1hP8unaKk95116h6jzKpb5"}
               />
             ) : (
-              <Viewer value={markdown} plugins={plugins} />
+              <Preview
+                value={markdown}
+                plugins={{
+                  remarkPlugins: [remarkGfm, remarkMath],
+                  rehypePlugins: [rehypeKatex],
+                }}
+              />
             )}
           </div>
         </div>

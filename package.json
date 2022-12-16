@@ -40,8 +40,13 @@
     "katex": "^0.16.4",
     "moment": "^2.29.4",
     "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.4",
     "react-redux": "^8.0.5",
+    "react-scroll-sync": "^0.11.0",
     "redux": "^4.2.0",
+    "rehype-katex": "^6.0.2",
+    "remark-gfm": "^3.0.1",
+    "remark-math": "^5.1.1",
     "sass": "^1.56.2",
     "tippy.js": "^6.3.7"
   },

@@ -20,10 +20,6 @@ export default function Home() {
     <Layout>
       <Notes />
       <Todos />
-      <img
-        src="file:///home/camilo/doom-notes/assets/newton.png"
-        alt="newton"
-      />
     </Layout>
   );
 }

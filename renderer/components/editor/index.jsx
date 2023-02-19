@@ -4,6 +4,8 @@ import Toolbar from "./Toolbar";
 import Footer from "./Footer";
 import { ScrollSync, ScrollSyncPane } from "react-scroll-sync";
 import { GrammarlyEditorPlugin } from "@grammarly/editor-sdk-react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { funky } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const Preview = ({ value, plugins }) => {
   return (
@@ -20,6 +22,24 @@ const Preview = ({ value, plugins }) => {
             <p className="text-center text-xs">{title}</p>
           </div>
         ),
+        code({ node, inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || "");
+          return !inline && match ? (
+            <SyntaxHighlighter
+              children={String(children).replace(/\n$/, "")}
+              style={funky}
+              customStyle={{ padding: 0 }}
+              language={match[1]}
+              PreTag="div"
+              showLineNumbers={true}
+              {...props}
+            />
+          ) : (
+            <code className={`${className}`} {...props}>
+              {children}
+            </code>
+          );
+        },
       }}
       escapeHtml={false}
     >

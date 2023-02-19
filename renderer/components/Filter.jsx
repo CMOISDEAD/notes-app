@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { BsFilter } from "react-icons/bs";
+import { BsFilter, BsFilePlus } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { setNotesData } from "../store/notesSlice";
 import moment from "moment";
@@ -12,9 +12,14 @@ export default ({ notes }) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <div className="p-1 rounded-md hover:bg-[#262626] cursor-pointer flex content-center items-center gap-4">
-          <BsFilter />
-          <p>by {type}</p>
+        <div className="p-1 rounded-md w-[75vw] flex flex-row justify-between content-center items-center gap-4">
+          <div className="left hover:bg-[#262626] cursor-pointer p-1 rounded-md inline-flex gap-3 items-center">
+            <BsFilter />
+            <p>by {type}</p>
+          </div>
+          <div className="right hover:bg-[#262626] cursor-pointer p-1 rounded-md">
+            <BsFilePlus />
+          </div>
         </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>

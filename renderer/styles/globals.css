@@ -41,12 +41,3 @@ body ::-webkit-scrollbar-track {
 body ::-webkit-scrollbar-thumb {
   background-color: #161616;
 }
-
-.special {
-  font-family: "special";
-}
-
-@font-face {
-  font-family: "special";
-  src: url("./matrix.ttf");
-}
